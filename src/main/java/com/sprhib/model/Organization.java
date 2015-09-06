@@ -1,10 +1,12 @@
 package com.sprhib.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,9 +19,24 @@ public class Organization {
 	private Integer id;
 	
 	private String name;
-	
-	private ArrayList<Team> teams;
 
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="organization_id")	
+	private List<Team> teams;
+	
+//	/**
+//	 * For testing Organization, Teams, Members and team-member relations arriving to database
+//	 */
+//	public Organization() {
+//		Team team = new Team();
+//		team.setName("default");
+//		team.setRating(1);
+//		Member member = new Member();
+//		member.setName("member1");	
+//		team.setMembers(Arrays.asList(member));
+//		setTeams(Arrays.asList(team));
+//	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -36,12 +53,11 @@ public class Organization {
 		this.name = name;
 	}
 
-	@OneToMany
-	public ArrayList<Team> getTeams() {
+	public List<Team> getTeams() {
 		return teams;
 	}
 
-	public void setTeams(ArrayList<Team> teams) {
+	public void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}
 	
@@ -59,13 +75,15 @@ public class Organization {
 	
 	@Override
 	public int hashCode() {
-		return (id.hashCode()+name.hashCode()+teams.hashCode());
+		return ( id.hashCode()+name.hashCode() + (teams != null ? teams.hashCode() : 0 ) );
 	}
 	
 	@Override
 	public String toString() {
 		return "Organization [name="+this.getName()+
-				"; Number of teams = "+this.getTeams().size()+"]";
+				"; Number of teams = "+
+				(this.getTeams() != null ? this.getTeams().size() : "")
+				+"]";
 	}
 	
 }

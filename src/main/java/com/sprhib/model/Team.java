@@ -1,10 +1,14 @@
 package com.sprhib.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -20,7 +24,14 @@ public class Team {
 	
 	private Integer rating;
 	
-	private ArrayList<Member> members;
+	@Column (name="organization_id", updatable = false)
+	private Integer organization_id;
+	
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="teammembers",
+			joinColumns=@JoinColumn(name="team_id"),
+			inverseJoinColumns=@JoinColumn(name="member_id"))	
+	private List<Member> members;
 	
 	public Integer getId() {
 		return id;
@@ -41,14 +52,17 @@ public class Team {
 		this.rating = rating;
 	}
 
-	@ManyToMany
-	public ArrayList<Member> getMembers() {
+	public List<Member> getMembers() {
 		return members;
 	}
-	public void setMembers(ArrayList<Member> members) {
+	public void setMembers(List<Member> members) {
 		this.members = members;
 	}
 
+	public Integer getOrganization_id() {
+		return organization_id;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Team) {
@@ -57,20 +71,26 @@ public class Team {
 					this.getName() == that.getName() &&
 					this.getRating() == that.getRating() &&
 					this.getMembers() != null &&
-					this.getMembers().containsAll(that.getMembers());
+					this.getMembers().containsAll(that.getMembers())
+					;
 		}
 		return false;
 	}
 	
 	@Override
 	public int hashCode() {
-		return (id.hashCode()+name.hashCode()+rating.hashCode()+members.hashCode());
+		return (id.hashCode()+name.hashCode()+rating.hashCode()
+				+ (members != null ? members.hashCode() : 0 )
+				);
 	}
 	
 	@Override
 	public String toString() {
-		return "Team [name="+this.getName()+
-				"; rating="+this.getRating()+ 
-				"; Number of Members = "+this.getMembers().size()+"]";
+		return "Team [name="+this.getName()
+				+"; rating="+this.getRating() 
+				+"; Number of Members = "
+				+ (this.getMembers() != null ? this.getMembers().size() : "")
+				+"]"
+				;
 	}
 }
