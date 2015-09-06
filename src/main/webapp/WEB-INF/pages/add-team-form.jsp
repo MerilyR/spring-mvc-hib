@@ -26,6 +26,15 @@
 		<td><form:input path="rating" /></td>
 	</tr>
 	<tr>
+		<td>Organization:</td>
+		<td>
+			<form:select path="organization_id" >
+				<form:option value="0" label="--- Select Organization ---"></form:option>
+				<form:options items="${organizations}" itemValue="id" itemLabel="name"></form:options>
+			</form:select>
+		</td>
+	</tr>
+	<tr>
 		<td><input type="submit" value="Add" /></td>
 		<td></td>
 	</tr>

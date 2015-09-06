@@ -63,15 +63,19 @@ public class Team {
 		return organization_id;
 	}
 	
+	public void setOrganization_id(Integer organization_id) {
+		this.organization_id = organization_id;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Team) {
 			Team that = (Team) obj;
-			return this.getId()==that.getId() && 
-					this.getName() == that.getName() &&
-					this.getRating() == that.getRating() &&
-					this.getMembers() != null &&
-					this.getMembers().containsAll(that.getMembers())
+			return getId()==that.getId() && 
+					getName() == that.getName() &&
+					getRating() == that.getRating() &&
+					getMembers() != null &&
+					getMembers().containsAll(that.getMembers())
 					;
 		}
 		return false;
@@ -86,11 +90,7 @@ public class Team {
 	
 	@Override
 	public String toString() {
-		return "Team [name="+this.getName()
-				+"; rating="+this.getRating() 
-				+"; Number of Members = "
-				+ (this.getMembers() != null ? this.getMembers().size() : "")
-				+"]"
-				;
+		return getName();
 	}
+
 }

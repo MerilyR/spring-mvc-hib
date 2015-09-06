@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sprhib.model.Organization;
 import com.sprhib.model.Team;
+import com.sprhib.service.OrganizationService;
 import com.sprhib.service.TeamService;
 
 @Controller
@@ -20,10 +22,17 @@ public class TeamController {
 	@Autowired
 	private TeamService teamService;
 	
+	@Autowired
+	private OrganizationService organizationService;
+	
 	@RequestMapping(value="/add", method=RequestMethod.GET)
 	public ModelAndView addTeamPage() {
 		ModelAndView modelAndView = new ModelAndView("add-team-form");
 		modelAndView.addObject("team", new Team());
+		List<Organization> organizations = organizationService.getOrganizations();
+		modelAndView.addObject("organizations", organizations);
+		System.out.println(organizations);
+		
 		return modelAndView;
 	}
 	
@@ -54,6 +63,8 @@ public class TeamController {
 		ModelAndView modelAndView = new ModelAndView("edit-team-form");
 		Team team = teamService.getTeam(id);
 		modelAndView.addObject("team",team);
+		List<Organization> organizations = organizationService.getOrganizations();
+		modelAndView.addObject("organizations", organizations);
 		return modelAndView;
 	}
 	

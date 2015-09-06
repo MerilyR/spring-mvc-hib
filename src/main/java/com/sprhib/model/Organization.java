@@ -65,10 +65,10 @@ public class Organization {
 	public boolean equals(Object obj) {
 		if (obj instanceof Organization) {
 			Organization that = (Organization) obj;
-			return this.getId()==that.getId() && 
-					this.getName() == that.getName() &&
-					this.getTeams() != null &&
-					this.getTeams().containsAll(that.getTeams());
+			return getId()==that.getId() && 
+					getName() == that.getName() &&
+					getTeams() != null &&
+					getTeams().containsAll(that.getTeams());
 		}
 		return false;
 	}	
@@ -80,10 +80,7 @@ public class Organization {
 	
 	@Override
 	public String toString() {
-		return "Organization [name="+this.getName()+
-				"; Number of teams = "+
-				(this.getTeams() != null ? this.getTeams().size() : "")
-				+"]";
+		return getName();
 	}
 	
 }
