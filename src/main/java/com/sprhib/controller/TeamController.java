@@ -31,7 +31,6 @@ public class TeamController {
 		modelAndView.addObject("team", new Team());
 		List<Organization> organizations = organizationService.getOrganizations();
 		modelAndView.addObject("organizations", organizations);
-		System.out.println(organizations);
 		
 		return modelAndView;
 	}

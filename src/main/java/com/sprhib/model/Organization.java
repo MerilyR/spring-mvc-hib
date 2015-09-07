@@ -24,19 +24,6 @@ public class Organization {
 	@JoinColumn(name="organization_id")	
 	private List<Team> teams;
 	
-//	/**
-//	 * For testing Organization, Teams, Members and team-member relations arriving to database
-//	 */
-//	public Organization() {
-//		Team team = new Team();
-//		team.setName("default");
-//		team.setRating(1);
-//		Member member = new Member();
-//		member.setName("member1");	
-//		team.setMembers(Arrays.asList(member));
-//		setTeams(Arrays.asList(team));
-//	}
-	
 	public Integer getId() {
 		return id;
 	}

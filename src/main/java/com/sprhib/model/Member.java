@@ -2,7 +2,6 @@ package com.sprhib.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,21 +13,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name="members")
 public class Member {
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
 	
 	private String name;
 	
-//	@ManyToMany(
-//	        cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-//	        mappedBy = "teams",
-//	        targetEntity = Team.class
-//    )
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name="teammembers",
-			joinColumns=@JoinColumn(name="member_id"),
-			inverseJoinColumns=@JoinColumn(name="team_id"))	
+	joinColumns=@JoinColumn(name="member_id"),
+	inverseJoinColumns=@JoinColumn(name="team_id"))
 	private List<Team> teams;
 	
 	public Integer getId() {
@@ -51,6 +46,10 @@ public class Member {
 		return teams;
 	}
 	
+	public void setTeams(List<Team> teams) {
+		this.teams = teams;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Member) {
@@ -60,7 +59,7 @@ public class Member {
 		}
 		return false;
 	}
-	
+		
 	@Override
 	public int hashCode() {
 		return (id.hashCode()+name.hashCode());
@@ -68,6 +67,6 @@ public class Member {
 	
 	@Override
 	public String toString() {
-		return "Member [name="+this.getName()+"]";
+		return getName();
 	}
 }
